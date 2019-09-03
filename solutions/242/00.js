@@ -9,9 +9,9 @@ const isAnagram = (s, t) => {
     return false;
 
   return new Set(
-    [s, t].map(
-      x => [...x].sort(String.localeCompare)
-                 .join('')))
+    [s, t].map(x =>
+      [...x].sort((a, b) => a.localeCompare(b))
+            .join('')))
     .size === 1;
 
 };
