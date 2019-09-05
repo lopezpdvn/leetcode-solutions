@@ -15,7 +15,7 @@ const productExceptSelf = nums => {
 
   let R = multiplicative_identity;
   for(let i = n - 1; i >= 0; i--) {
-    answer[i] = answer[i] * R;
+    answer[i] *= R;
     R *= nums[i];
   }
 
