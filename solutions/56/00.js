@@ -7,12 +7,12 @@
 const merge = intervals => {
 
   intervals.sort((a, b) => {
-    if(a[0] < b[0])
+    if     (a[0] < b[0])
       return Number.NEGATIVE_INFINITY;
-    else if(a[0] === b[0])
-      return 0;
-    else
+    else if(b[0] < a[0])
       return Number.POSITIVE_INFINITY;
+    else
+      return 0;
   });
 
   const merged = [];
