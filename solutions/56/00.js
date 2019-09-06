@@ -30,7 +30,11 @@ const merge = intervals => {
 
 };
 
-const x = [[1,3],[2,6],[8,10],[15,18]];
-log(merge(x))
+const inputs = [];
+inputs.push([[1,3],[2,6],[8,10],[15,18]]);
+inputs.push([[1,9],[2,5],[19,20],[10,11],
+             [12,20],[0,3],[0,1],[0,2]]);
+
+inputs.forEach(x => log(merge(x)));
 
 })();
