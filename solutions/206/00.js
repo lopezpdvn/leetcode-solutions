@@ -7,7 +7,7 @@
 const reverseList = head => {
   let prev = null, curr = head;
   while(curr) {
-    nextTmp = curr.next;
+    const nextTmp = curr.next;
     curr.next = prev;
     prev = curr;
     curr = nextTmp;
