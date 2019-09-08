@@ -4,20 +4,42 @@
  * @param {number[]} nums
  * @return {number}
  */
-const findMin = nums => {
-  return Math.min.apply(null, nums);
+const findMin = A => {
+  if(A.length === 1)
+    return A[0];
+
+  let L = 0, R = A.length - 1;
+
+  if(A[0] < A[R])
+    return A[0];
+
+  while(L <= R) {
+    const mid = Math.trunc((L + R) / 2);
+
+    if(A[mid] < A[mid - 1])
+      return A[mid];
+
+    if(A[0] <= A[mid])
+      L = mid + 1;
+    else
+      R = mid - 1;
+  }
+
+  return -1;
 };
 
 const tests = [
   [[3,4,5,1,2], 1],
-  [[4,5,6,7,0,1,2], 0]
+  [[4,5,6,7,0,1,2], 0],
+  [[2,1], 1]
 ]
 
 tests.forEach(test => {
-  if(findMin(test[0]) === test[1])
+  const result = findMin(test[0]);
+  if(result === test[1])
     log('OK');
   else
-    log(`ERROR: ${test}`);
+    log(`ERROR: ${test}, ${result}`);
 });
 
 })();
