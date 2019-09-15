@@ -12,12 +12,20 @@
  * @param {TreeNode} q
  * @return {boolean}
  */
-const isSameTree = (p, q) => {
-  return true;
+const isSameTree = function f(p, q) {
+  if(!p && !q)
+    return true;
+  if(!p || !q)
+    return false;
+  if(p.val !== q.val)
+    return false;
+  return f(p.right, q.right) &&
+         f(p.left , q.left);
 };
 
 const tests = [
   [[[1,2,3], [1,2,3]], true],
+  [[[1,2,1], [1,1,2]], false],
 ];
 
 tests.forEach(test => {
