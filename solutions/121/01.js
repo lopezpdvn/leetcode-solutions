@@ -1,22 +1,17 @@
 /**
  * @param {number[]} prices
  * @return {number}
- */ //////////////////////////////////////////////////
+ */
+//////////////////////////////////////////////////
 const maxProfit = prices => {
-  let minPrice  = Number.MAX_VALUE,
-      maxProfit = Number();
-
-  for(const todayPrice of prices) {
-
-    if(todayPrice < minPrice) {
-      minPrice = todayPrice;
-      continue;
+  let maxProfit = null;
+  for(const [iBuy, buyPrc] of prices.entries()) {
+    for(let iSell = iBuy+1;
+                iSell < prices.length; iSell++) {
+      const profit = prices[iSell] - buyPrc;
+      if(profit > maxProfit)
+        maxProfit = profit;
     }
-
-    const todayProfit = todayPrice - minPrice;
-    if(todayProfit > maxProfit)
-      maxProfit = todayProfit;
   }
-
   return maxProfit;
 };
