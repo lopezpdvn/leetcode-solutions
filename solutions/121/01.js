@@ -4,11 +4,11 @@
  */
 //////////////////////////////////////////////////
 const maxProfit = prices => {
-  let maxProfit = null;
-  for(const [iBuy, buyPrc] of prices.entries()) {
-    for(let iSell = iBuy+1;
-                iSell < prices.length; iSell++) {
-      const profit = prices[iSell] - buyPrc;
+  const n = prices.length;
+  let maxProfit = Number();
+  for(let i = 0; i < n; i++) {
+    for(let j = i + 1; j < n; j++) {
+      const profit = prices[j] - prices[i];
       if(profit > maxProfit)
         maxProfit = profit;
     }
