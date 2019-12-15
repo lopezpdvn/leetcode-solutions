@@ -8,8 +8,14 @@ const reverseList = function f(head) {
   if(!head || !head.next)
     return head;
   const p = f(head.next);
+
+  // Make last non-null node of p point to head.
   head.next.next = head;
+
+  // Now that head is the last non-null node of p
+  // make it point to null
   head.next = null;
+
   return p;
 };
 
