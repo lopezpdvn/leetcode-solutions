@@ -4,16 +4,14 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-const reverseList = head => {
-  let prev = null, curr = head;
-  while(curr) {
-    const nextTmp = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = nextTmp;
-  }
-  return prev;
-}
+const reverseList = function f(head) {
+  if(!head || !head.next)
+    return head;
+  const p = f(head.next);
+  head.next.next = head;
+  head.next = null;
+  return p;
+};
 
 class ListNode {
   constructor(val) {
