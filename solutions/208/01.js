@@ -12,8 +12,7 @@ class Trie {
    */
   insert(word) {
     let node = this.root;
-    for(let i = 0; i < word.length; i++) {
-      const currChar = word.charAt(i);
+    for(const currChar of word) {
       if(!node.containsKey(currChar))
         node.put(currChar, new TrieNode());
       node = node.get(currChar);
@@ -35,8 +34,7 @@ class Trie {
   // returns the node where search ends
   searchPrefix(word) {
     let node = this.root;
-    for(let i = 0; i < word.length; i++) {
-      const curChar = word.charAt(i);
+    for(const curChar of word) {
       if(node.containsKey(curChar))
         node = node.get(curChar);
       else
@@ -63,17 +61,20 @@ class TrieNode {
   }
 
   containsKey(ch) {
-    const chIndex = ch.charCodeAt(0) - TrieNode.aCharCode;
+    const chIndex = ch.charCodeAt(0) -
+                    TrieNode.aCharCode;
     return this.links[chIndex] !== undefined;
   }
 
   put(ch, node) {
-    const chIndex = ch.charCodeAt(0) - TrieNode.aCharCode;
+    const chIndex = ch.charCodeAt(0) -
+          TrieNode.aCharCode;
     this.links[chIndex] = node;
   }
 
   get(ch) {
-    const chIndex = ch.charCodeAt(0) - TrieNode.aCharCode;
+    const chIndex = ch.charCodeAt(0) -
+          TrieNode.aCharCode;
     return this.links[chIndex];
   }
 
