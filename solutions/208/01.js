@@ -1,11 +1,8 @@
 'use strict'; const log = console.log; (async ()=>{
 
 class Trie {
-  /**
-   * Initialize your data structure here.
-   */
   constructor() {
-    this.words = new Set();
+    this.root = new TrieNode();
   }
 
   /**
@@ -14,7 +11,14 @@ class Trie {
    * @return {void}
    */
   insert(word) {
-    this.words.add(word);
+    let node = this.root;
+    for(let i = 0; i < word.length; i++) {
+      const currChar = word.charAt(i);
+      if(!node.containsKey(currChar))
+        node.put(currChar, new TrieNode());
+      node = node.get(currChar);
+    }
+    node.setEnd();
   };
 
   /**
@@ -23,8 +27,23 @@ class Trie {
    * @return {boolean}
    */
   search(word) {
-    return this.words.has(word);
+    const node = this.searchPrefix(word);
+    return node && node.isEnd;
   };
+
+  // search a prefix or whole key in trie and
+  // returns the node where search ends
+  searchPrefix(word) {
+    let node = this.root;
+    for(let i = 0; i < word.length; i++) {
+      const curChar = word.charAt(i);
+      if(node.containsKey(curChar))
+        node = node.get(curChar);
+      else
+        return null;
+    }
+    return node;
+  }
 
   /**
    * Returns if there is any word in the trie that starts with the given prefix.
@@ -32,12 +51,39 @@ class Trie {
    * @return {boolean}
    */
   startsWith(prefix) {
-    for(const word of this.words)
-      if(word.startsWith(prefix))
-        return true;
-    return false;
+    const node = this.searchPrefix(prefix);
+    return node !== null;
   };
 }
+
+class TrieNode {
+  constructor() {
+    this.isEnd = Boolean();
+    this.links = new Array(TrieNode.R);
+  }
+
+  containsKey(ch) {
+    const chIndex = ch.charCodeAt(0) - TrieNode.aCharCode;
+    return this.links[chIndex] !== undefined;
+  }
+
+  put(ch, node) {
+    const chIndex = ch.charCodeAt(0) - TrieNode.aCharCode;
+    this.links[chIndex] = node;
+  }
+
+  get(ch) {
+    const chIndex = ch.charCodeAt(0) - TrieNode.aCharCode;
+    return this.links[chIndex];
+  }
+
+  setEnd() {
+    this.isEnd = true;
+  }
+}
+
+TrieNode.R = 26;
+TrieNode.aCharCode = 'a'.charCodeAt(0);
 
 /**
  * Your Trie object will be instantiated and called as such:
