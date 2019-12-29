@@ -28,7 +28,7 @@ class Trie {
    */
   search(word) {
     const node = this.searchPrefix(word);
-    return node && node.isEnd;
+    return !!node && node.isEnd;
   };
 
   // search a prefix or whole key in trie and
@@ -92,5 +92,15 @@ TrieNode.aCharCode = 'a'.charCodeAt(0);
  * var param_2 = obj.search(word)
  * var param_3 = obj.startsWith(prefix)
  */
+
+//const x = new Trie();
+//const a = x.search('a');
+//log(a);
+// log(x.insert('apple'));
+// log(x.search('apple'));
+// log(x.search('app'));
+// log(x.startsWith('app'));
+// log(x.insert('app'));
+// log(x.search('app'));
 
 })();
