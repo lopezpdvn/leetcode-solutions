@@ -4,7 +4,7 @@
  * Initialize your data structure here.
  */
 var Trie = function() {
-    
+  this.words = new Set();
 };
 
 /**
@@ -13,7 +13,7 @@ var Trie = function() {
  * @return {void}
  */
 Trie.prototype.insert = function(word) {
-    
+  this.words.add(word);
 };
 
 /**
@@ -22,7 +22,7 @@ Trie.prototype.insert = function(word) {
  * @return {boolean}
  */
 Trie.prototype.search = function(word) {
-    
+  return this.words.has(word);
 };
 
 /**
@@ -31,7 +31,10 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
-    
+  for(const word of this.words)
+    if(word.startsWith(prefix))
+      return true;
+  return false;
 };
 
 /** 
