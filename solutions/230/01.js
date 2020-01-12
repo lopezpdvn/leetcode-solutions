@@ -11,6 +11,16 @@
  * @return {number}
  */
 const kthSmallest = (root, k) => {
+  const nodesInOrder = inOrdDepthTrvrsl(root, []);
+  return nodesInOrder[k-1];
+};
+
+const inOrdDepthTrvrsl = function f(x, arr) {
+  if(!x) return arr;
+  f(x.left, arr);
+  arr.push(x);
+  f(x.right, arr);
+  return arr;
 };
 
 class TreeNode {
