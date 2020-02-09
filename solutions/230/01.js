@@ -12,7 +12,7 @@
  */
 const kthSmallest = (root, k) => {
   const nodesInOrder = [...inOrdDepthTrvrsl(root)];
-  return nodesInOrder[0].val;
+  return nodesInOrder[k-1].val;
 };
 
 const inOrdDepthTrvrsl = function* f(x) {
