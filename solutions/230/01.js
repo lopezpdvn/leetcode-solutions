@@ -12,11 +12,11 @@
  */
 const kthSmallest = (root, k) => {
   const nodesInOrder = inOrdDepthTrvrsl(root, []);
-  return nodesInOrder[k-1];
+  return nodesInOrder[0].val;
 };
 
 const inOrdDepthTrvrsl = function f(x, arr) {
-  if(!x) return arr;
+  if(x === null || x === undefined) return arr;
   f(x.left, arr);
   arr.push(x);
   f(x.right, arr);
