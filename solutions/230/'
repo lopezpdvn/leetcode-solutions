@@ -16,7 +16,7 @@ const kthSmallest = (root, k) => {
 };
 
 const inOrdDepthTrvrsl = function* f(x) {
-  if(!x) return;
+  if(x === null || x === undefined) return;
   yield* f(x.left);
   yield x;
   yield* f(x.right);
