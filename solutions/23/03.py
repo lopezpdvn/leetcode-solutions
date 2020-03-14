@@ -1,14 +1,16 @@
-class PriorityQueue:
-  def __init__(self):
-    self.q = []
+from queue import PriorityQueue
 
-  def push(self, x):
-    from heapq import heappush
-    heappush(self.q, x)
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
-  def pop(self):
-    from heapq import heappop
-    return heappop(self.q)
+class Node:
+  def __init__(self, node):
+    self.node = node
+  def __lt__(self, other):
+    return self.node.val < other.node.val
 
 class Solution:
   def mergeKLists(self,
@@ -20,18 +22,18 @@ class Solution:
     q = PriorityQueue()
     for l in lists:
       if l:
-        q.push((l.val, l))
+        q.put(Node(l))
 
     node = headAns
-    while not len(q):
+    while not q.empty():
       # highest priority node of k nodes
-      valMinK, nodeMinK = q.pop()
+      nodeMinK = q.get().node
 
       # Append to final list
-      node.next = ListNode(valMinK)
+      node.next = ListNode(nodeMinK.val)
       node = node.next
 
       if nodeMinK.next:
-        q.push((nodeMinK.next.val, nodeMinK.next))
+        q.put(Node(nodeMinK))
 
     return headAns.next
