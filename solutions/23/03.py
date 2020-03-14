@@ -34,6 +34,6 @@ class Solution:
       node = node.next
 
       if nodeMinK.next:
-        q.put(Node(nodeMinK))
+        q.put(Node(nodeMinK.next))
 
     return headAns.next
