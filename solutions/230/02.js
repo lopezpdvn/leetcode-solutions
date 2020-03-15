@@ -11,10 +11,10 @@
  * @return {number}
  */
 const kthSmallest = (root, k) => {
-  let iNode = undefined;
-  for(iNode of IODFT(root, []))
-    if(!--k) break;
-  return iNode.val;
+  const node = elementAt(
+    function* () { yield* IODFT(root, []) },
+    k - 1);
+  return node.val;
 };
 
 const IODFT = function* (root, stack = []) {
@@ -30,6 +30,16 @@ const IODFT = function* (root, stack = []) {
     }
   }
 }
+
+const elementAt = (gen, k) => {
+  if(k < 0) throw new Error('Index < 0');
+
+  for(const e of gen())
+    if(!k--)
+      return e;
+
+  throw new Error('Index >= length of sequence');
+};
 
 class TreeNode {
   constructor(val) {
