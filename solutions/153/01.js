@@ -14,7 +14,7 @@ const findMin = A => {
     return A[0];
 
   while(L <= R) {
-    const mid = Math.trunc((L + R) / 2);
+    const mid = Math.trunc(L + (R - L) / 2);
 
     if(A[mid] < A[mid - 1])
       return A[mid];
