@@ -6,20 +6,20 @@
  */
 const productExceptSelf = nums => {
   const multiplicative_identity = 1,
-        n      = nums.length,
-        answer =  new Array(n).fill(Number());
+        n          = nums.length,
+        L          = new Array(n).fill(Number()),
+        R          = Array.from(L),
+        answer     = Array.from(L);
 
-  answer[0] = multiplicative_identity;
+  L[0] = multiplicative_identity;
   for(let i = 1; i < n; i++)
-    answer[i] = nums[i - 1] * answer[i - 1];
+    L[i] = nums[i - 1] * L[i - 1];
 
-  let R = multiplicative_identity;
-  for(let i = n - 1; i >= 0; i--) {
-    answer[i] *= R;
-    R *= nums[i];
-  }
+  R[n - 1] = multiplicative_identity;
+  for(let i = n - 2; i >= 0; i--)
+    R[i] = nums[i + 1] * R[i + 1];
 
-  return answer;
+  return answer.map((e, i) => L[i] * R[i]);
 };
 
 log(productExceptSelf([1,2,3,4]));
