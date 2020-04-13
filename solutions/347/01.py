@@ -1,15 +1,17 @@
 from collections import Counter
-from heapq import heappush, heappop
+from queue import PriorityQueue
 
 class Solution:
   def topKFrequent(self, nums, k):
-    counter = Counter(nums)
-    
-    h = []
-    for e, count in counter.items():
-      heappush(h, (count, e))
-      if len(h) > k:
-        heappop(h)
+    mset = Counter(nums)
+    h = PriorityQueue()
+    i = 0
+
+    for e, count in mset.items():
+      h.put((count, i, e))
+      i += 1
+
+      if h.qsize() > k: h.get()
 
     return reversed(
-          [heappop(h)[1] for i in range(len(h))])
+            [h.get()[2] for i in range(k)])
