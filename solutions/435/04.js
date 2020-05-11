@@ -6,15 +6,16 @@ const eraseOverlapIntervals = intervals => {
   if(!intervals.length) return count;
 
   intervals.sort((a, b) => a[0] - b[0]);
-  let prev = 0;
+  let prev = intervals[0];
 
   for(let i = 1; i < intervals.length; i++) {
-    if(intervals[prev][1] > intervals[i][0]) {
-      if(intervals[prev][1] > intervals[i][1])
-        prev = i;
+    const curr = intervals[i];
+    if(prev[1] > curr[0]) {
+      if(prev[1] > curr[1])
+        prev = curr;
       count++;
     }
-    else prev = i;
+    else prev = curr;
   }
 
   return count;
