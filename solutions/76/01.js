@@ -6,52 +6,57 @@
  * @return {string}
  */
 const minWindow = (s, t, noAnswer = '') => {
-  if(!s.length || !t.length)
-    return noAnswer;
+  if(!s.length || !t.length) return noAnswer;
 
-  const uniqChars = new Map();
-  for(let i = 0; i < t.length; i++) {
-    const count = uniqChars.get(t.charAt(i)) || 0;
-    uniqChars.set(t.charAt(i), count + 1);
-  }
-
-  const required     = uniqChars.size,
-        winCounts    = new Map(),
+  const tCounter  = new Counter(t);
+        swMinlen  = tCounter.size,
+        swCounter = new Counter();
         sw        = {length: -1, l: 0, r: 0};
-  let L = 0, R = 0, formed = 0;
+  let l = r = formed = Number();
 
-  while(R < s.length) {
-    let c = s.charAt(R);
-    const count = winCounts.get(c) || 0;
-    winCounts.set(c, count + 1);
+  while(r < s.length) {
+    let c = s[r];
+    swCounter.put(c);
 
-    if(uniqChars.has(c) &&
-       winCounts.get(c) === uniqChars.get(c))
+    if(tCounter.has(c) &&
+       swCounter.get(c) === tCounter.get(c))
       formed++;
 
-    while(L <= R && formed === required) {
-      c = s.charAt(L);
+    while(l <= r && formed === swMinlen) {
+      c = s.charAt(l);
       // save smallest window until now
-      if(sw.length === -1 || R - L + 1 < sw.length) {
-        sw.length = R - L + 1;
-        sw.l = L;
-        sw.r = R;
+      if(sw.length === -1 || r - l + 1 < sw.length) {
+        sw.length = r - l + 1;
+        sw.l = l;
+        sw.r = r;
       }
 
-      winCounts.set(c, winCounts.get(c) - 1);
-      if(uniqChars.has(c) &&
-         winCounts.get(c) < uniqChars.get(c))
+      swCounter.set(c, swCounter.get(c) - 1);
+      if(tCounter.has(c) &&
+         swCounter.get(c) < tCounter.get(c))
         formed--;
 
-      L++;
+      l++;
     }
-    R++;
+    r++;
   }
 
   return sw.length === -1 ?
          noAnswer      :
          s.slice(sw.l, sw.r + 1);
 };
+
+class Counter extends Map {
+  constructor(seq = []) {
+    super();
+    for(const e of seq)
+      this.set(e, (this.get(e) || 0) + 1);
+  }
+
+  put(e) {
+    this.set(e, (this.get(e) || 0) + 1);
+  }
+}
 
 const tests = [
   [["ADOBECODEBANC", "ABC"], "BANC"],
@@ -63,7 +68,7 @@ tests.forEach(test => {
   if(result === test[1])
     log('OK');
   else
-    log(`ERROR: ${test}, ${result}`);
+    log(`ErrOr: ${test}, ${result}`);
 });
 
 })();
