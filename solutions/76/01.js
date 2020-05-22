@@ -17,7 +17,7 @@ const minWindow = (s, t, noAnswer = '') => {
 
   const required     = uniqChars.size,
         winCounts    = new Map(),
-        ans          = [-1, 0, 0];
+        sw        = {length: -1, l: 0, r: 0};
   let L = 0, R = 0, formed = 0;
 
   while(R < s.length) {
@@ -32,10 +32,10 @@ const minWindow = (s, t, noAnswer = '') => {
     while(L <= R && formed === required) {
       c = s.charAt(L);
       // save smallest window until now
-      if(ans[0] === -1 || R - L + 1 < ans[0]) {
-        ans[0] = R - L + 1;
-        ans[1] = L;
-        ans[2] = R;
+      if(sw.length === -1 || R - L + 1 < sw.length) {
+        sw.length = R - L + 1;
+        sw.l = L;
+        sw.r = R;
       }
 
       winCounts.set(c, winCounts.get(c) - 1);
@@ -48,9 +48,9 @@ const minWindow = (s, t, noAnswer = '') => {
     R++;
   }
 
-  return ans[0] === -1 ?
+  return sw.length === -1 ?
          noAnswer      :
-         s.slice(ans[1], ans[2] + 1);
+         s.slice(sw.l, sw.r + 1);
 };
 
 const tests = [
