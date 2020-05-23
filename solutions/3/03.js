@@ -5,16 +5,19 @@
  * @return {number}
  */
 const lengthOfLongestSubstring = s => {
-  const n = s.length, map = new Map();
-  let ans = 0;
-  for(let j = 0, i = 0; j < n; j++) {
-    const charAtJ = s.charAt(j);
-    if(map.has(charAtJ))
-      i = Math.max(map.get(charAtJ) + 1, i);
+  let ans = i = j = Number()
+  const c2i = new Map();
+
+  for(const c of s) {
+    let k;
+    if(undefined !== (k = c2i.get(c)))
+      i = Math.max(k + 1, i);
     ans = Math.max(ans, j - i + 1);
-    map.set(charAtJ, j);
+    c2i.set(c, j++);
   }
+
   return ans;
+
 };
 
 const tests = [
