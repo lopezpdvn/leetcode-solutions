@@ -19,7 +19,7 @@ const f = A => {
     if(count === degree) {
       ans = Math.min(ans,
 
-        // degree of subarr containing all e's
+        // length of subarr containing all e's
         right.get(e) - left.get(e) + 1);
 
     }
