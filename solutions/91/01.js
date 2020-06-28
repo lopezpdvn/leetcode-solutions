@@ -19,7 +19,9 @@ const g = function f(i, s, memo) {
   if(memo.has(i)) return memo.get(i);
 
   let ans = f(i + 1, s, memo);
-  if(parseInt(s.substring(i, i + 2)) <= 26)
+
+  if(i < s.length - 1 &&
+            parseInt(s.substring(i, i + 2)) <= 26)
     ans += f(i + 2, s, memo);
 
   memo.set(i, ans);
