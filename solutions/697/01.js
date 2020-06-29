@@ -3,26 +3,29 @@
  * @return {number}
  */
 const f = A => {
-  const left = new Map(), right = new Map(),
-    mset = new Map();
+  const L = new Map(), R = new Map(),
+    mSet = new Map(),
+    ADeg = {e: undefined, count: -Infinity};
 
   A.forEach((e, i) => {
-    if(left.get(e) === undefined) left.set(e, i);
-    right.set(e, i);
-    mset.set(e, (mset.get(e) || 0) + 1); // count
+    if(L.get(e) === undefined)
+      L.set(e, i);
+    R.set(e, i);
+
+    eCount = (mSet.get(e) || 0) + 1;
+    if(eCount > ADeg.count)  {
+      ADeg.e = e;
+      ADeg.count = eCount;
+    }
+    mSet.set(e, eCount);
   });
 
-  const degree = Math.max(...mset.values());
   let ans = A.length;
 
-  mset.forEach((count, e) => {
-    if(count === degree) {
-      ans = Math.min(ans,
-
-        // length of subarr containing all e's
-        right.get(e) - left.get(e) + 1);
-
-    }
+  mSet.forEach((count, e) => {
+    if(ADeg.count !== count)
+      return;
+    ans = Math.min(ans, R.get(e) - L.get(e) + 1);
   });
 
   return ans;
