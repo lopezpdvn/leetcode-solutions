@@ -7,23 +7,20 @@ Ex2: '226' -> 3 : 'BZ', 'VF' or 'BBF'
 
 numDecodings :: String -> Int                   */
 const numDecodings = s => {
-  if(!s || !s.length) return 0;
-  return g(0, s, new Array(s.length + 1));
+  if(!s) return 0;
+  const n = s.length;
+  return g(n, s, new Array(n + 1));
 };
 
 const g = function f(i, s, memo) {
-  if(i === s.length)     return 1;
-  if(s[i] === '0')       return 0;
-  if(i === s.length - 1) return 1;
+  if(i < 0 || s[i] === '0') return 0;
+  if(!i)                    return 1;
 
-  if(memo[i]) return memo[i];
-
-  let ans = f(i + 1, s, memo);
-
-  if(parseInt(s.substring(i, i + 2)) <= 26)
-    ans += f(i + 2, s, memo);
-
-  memo[i] = ans;
+  if(!memo[i]) {
+    memo[i] = f(i - 1, s, memo);
+    if(parseInt(s.slice(i - 2, i)) <= 26)
+      memo[i] += f(i - 2, s, memo);
+  }
 
   return memo[i];
 };
