@@ -1,13 +1,17 @@
 'use strict'; const log = console.log; (async ()=>{
 
-const climbStairs = n => g(n, new Array(n+1));
-
-const g = function f(n, a) {
-  if(n < 0) return 0;
-  if(!n)    return 1;
-  if(!a[n])
-    a[n] = f(n-1, a) + f(n-2, a);
-  return a[n];
+/**
+ * @param {number} n
+ * @return {number}
+ */
+const climbStairs = n => {
+  if     (n < 0 )
+    return 0;
+  else if(n == 0)
+    return 1;
+  else
+    return climbStairs(n-1) +
+           climbStairs(n-2);
 };
 
 })();
