@@ -8,7 +8,7 @@ Ex2: '226' -> 3 : 'BZ', 'VF' or 'BBF'
 numDecodings :: String -> Int                   */
 const numDecodings = s => {
   if(!s || !s.length) return 0;
-  return g(0, s, new Map());
+  return g(0, s, new Array(s.length + 1));
 };
 
 const g = function f(i, s, memo) {
@@ -16,14 +16,14 @@ const g = function f(i, s, memo) {
   if(s[i] === '0')       return 0;
   if(i === s.length - 1) return 1;
 
-  if(memo.has(i)) return memo.get(i);
+  if(memo[i]) return memo[i];
 
   let ans = f(i + 1, s, memo);
 
   if(parseInt(s.substring(i, i + 2)) <= 26)
     ans += f(i + 2, s, memo);
 
-  memo.set(i, ans);
+  memo[i] = ans;
 
-  return ans;
+  return memo[i];
 };
