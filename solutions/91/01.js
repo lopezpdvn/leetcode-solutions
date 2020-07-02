@@ -18,7 +18,7 @@ const g = function f(i, s, memo) {
 
   if(!memo[i]) {
     memo[i] = f(i - 1, s, memo);
-    if(parseInt(s.slice(i - 2, i)) <= 26)
+    if(parseInt(s.substring(i - 2, i)) <= 26)
       memo[i] += f(i - 2, s, memo);
   }
 
