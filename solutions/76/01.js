@@ -1,10 +1,14 @@
 'use strict'; const log = console.log; (async ()=>{
 
-/**
- * @param {string} s
- * @param {string} t
- * @return {string}
- */
+/* Get shortest substr of s that contains all
+t chars, or empty str if not possible. O(n) time
+
+Ex0: ADOBECODEBANC -> ABC  -> BANC
+Ex1: ADOBECODEBANC -> AB   -> BA
+Ex2: ABAACBAB      -> ABC  -> ACB
+Ex3: ABAACBAB      -> ABAC -> BAAC
+Ex4: AA            -> C    ->
+Ex5: ACCABCCCCA    -> ABA  -> ACCAB             */
 const minWindow = (s, t, noAnswer = '') => {
   if(!s.length || !t.length) return noAnswer;
 
@@ -97,7 +101,8 @@ const tests = [
   [['ADOBECODEBANC', 'AB'  ], 'BA'  ],
   [['ABAACBAB'     , 'ABC' ], 'ACB' ],
   [['ABAACBAB'     , 'ABAC'], 'BAAC'],
-  [['AA'     , 'C'], '']
+  [['AA'     , 'C'], ''],
+  [['ACCABCCCCA'   , 'ABA'],  'ACCAB'],
 ];
 
 tests.forEach(test => {
