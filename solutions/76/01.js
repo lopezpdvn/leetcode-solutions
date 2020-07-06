@@ -8,18 +8,18 @@
 const minWindow = (s, t, noAnswer = '') => {
   if(!s.length || !t.length) return noAnswer;
 
-  const tCounter  = new Counter(t);
-        swMinlen  = tCounter.size,
-        swCounter = new Counter();
+  const tMultiSet  = new MultiSet(t),
+        swMinlen  = tMultiSet.size,
+        swMultiSet = new MultiSet(),
         sw        = {length: -1, l: 0, r: 0};
-  let l = r = formed = Number();
+  let l = 0, r = 0, formed = 0;
 
   while(r < s.length) {
     let c = s[r];
-    swCounter.put(c);
+    swMultiSet.put(c);
 
-    if(tCounter.has(c) &&
-       swCounter.get(c) === tCounter.get(c))
+    if(tMultiSet.has(c) &&
+       swMultiSet.get(c) === tMultiSet.get(c))
       formed++;
 
     while(l <= r && formed === swMinlen) {
@@ -31,9 +31,9 @@ const minWindow = (s, t, noAnswer = '') => {
         sw.r = r;
       }
 
-      swCounter.set(c, swCounter.get(c) - 1);
-      if(tCounter.has(c) &&
-         swCounter.get(c) < tCounter.get(c))
+      swMultiSet.set(c, swMultiSet.get(c) - 1);
+      if(tMultiSet.has(c) &&
+         swMultiSet.get(c) < tMultiSet.get(c))
         formed--;
 
       l++;
@@ -46,7 +46,7 @@ const minWindow = (s, t, noAnswer = '') => {
          s.slice(sw.l, sw.r + 1);
 };
 
-class Counter extends Map {
+class MultiSet extends Map {
   constructor(seq = []) {
     super();
     for(const e of seq)
@@ -59,8 +59,10 @@ class Counter extends Map {
 }
 
 const tests = [
-  [["ADOBECODEBANC", "ABC"], "BANC"],
-  [["ADOBECODEBANC", "AB"], "BA"]
+  [['ADOBECODEBANC', 'ABC' ], 'BANC'],
+  [['ADOBECODEBANC', 'AB'  ], 'BA'  ],
+  [['ABAACBAB'     , 'ABC' ], 'ACB' ],
+  [['ABAACBAB'     , 'ABAC'], 'BAAC']
 ];
 
 tests.forEach(test => {
