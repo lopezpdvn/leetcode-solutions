@@ -11,7 +11,7 @@ const minWindow = (s, t, noAnswer = '') => {
   const tMultiSet  = new MultiSet(t),
         swMinlen  = tMultiSet.size,
         swMultiSet = new MultiSet(),
-        sw        = {length: -1, l: 0, r: 0};
+        minSW        = new SlidingWindow();
   let l = 0, r = 0, formed = 0;
 
   while(r < s.length) {
@@ -25,10 +25,9 @@ const minWindow = (s, t, noAnswer = '') => {
     while(l <= r && formed === swMinlen) {
       c = s.charAt(l);
       // save smallest window until now
-      if(sw.length === -1 || r - l + 1 < sw.length) {
-        sw.length = r - l + 1;
-        sw.l = l;
-        sw.r = r;
+      if(isNaN(minSW.length) || r - l + 1 < minSW.length) {
+        minSW.L = l;
+        minSW.R = r;
       }
 
       swMultiSet.set(c, swMultiSet.get(c) - 1);
@@ -41,9 +40,9 @@ const minWindow = (s, t, noAnswer = '') => {
     r++;
   }
 
-  return sw.length === -1 ?
+  return minSW.length === -1 ?
          noAnswer      :
-         s.slice(sw.l, sw.r + 1);
+         s.slice(minSW.L, minSW.R + 1);
 };
 
 class MultiSet extends Map {
@@ -57,6 +56,17 @@ class MultiSet extends Map {
     this.set(e, (this.get(e) || 0) + 1);
   }
 }
+
+class SlidingWindow {
+  constructor() {
+    this.L = undefined;
+    this.R = undefined;
+  }
+
+  get length() {
+    return this.R - this.L + 1;
+  }
+};
 
 const tests = [
   [['ADOBECODEBANC', 'ABC' ], 'BANC'],
