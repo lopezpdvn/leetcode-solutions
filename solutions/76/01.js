@@ -8,21 +8,19 @@
 const minWindow = (s, t, noAnswer = '') => {
   if(!s.length || !t.length) return noAnswer;
 
-  const tMultiSet  = new MultiSet(t),
-        sw = new MultiSetSlidingWindow(tMultiSet),
-        minSW = new SlidingWindow();
+  const minSW = new SlidingWindow(),
+    sw = new MultiSetSlidingWindow(
+                                 new MultiSet(t));
 
   for(const c of s) {
     sw.add(c);
 
     while(sw.length >= 0 && sw.containsTargetMultiSet) {
-      const k = s.charAt(sw.L);
+      const k = s[sw.L];
 
       // save smallest window until now
-      if(!minSW.length || sw.length < minSW.length) {
-        minSW.L = sw.L;
-        minSW.R = sw.R;
-      }
+      if(!minSW.length || sw.length < minSW.length)
+        [minSW.L, minSW.R] = [sw.L, sw.R];
 
       sw.delete(k);
     }
