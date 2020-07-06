@@ -34,16 +34,18 @@ class MultiSet extends Map {
   constructor(seq = []) {
     super();
     for(const e of seq)
-      this.set(e, (this.get(e) || 0) + 1);
+      this.add(e);
   }
 
   add(e) {
-    this.set(e, (this.get(e) || 0) + 1);
+    let count = this.get(e) || 0;
+    this.set(e, ++count);
+    return count;
   }
 
   delete(e) {
-    let count = this.get(e);
-    if(count !== undefined)
+    let count = this.get(e) || 0;
+    if(count)
       this.set(e, --count);
     return count;
   }
