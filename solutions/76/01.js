@@ -9,19 +9,15 @@ const minWindow = (s, t, noAnswer = '') => {
   if(!s.length || !t.length) return noAnswer;
 
   const tMultiSet  = new MultiSet(t),
-        swMinlen  = tMultiSet.size,
-        sw = new MultiSetSlidingWindow(),
+        sw = new MultiSetSlidingWindow(tMultiSet),
         minSW        = new SlidingWindow();
   let l = 0, r = 0, formed = 0;
 
   for(const c of s) {
     sw.put(c);
 
-    if(tMultiSet.has(c) &&
-       sw.get(c) === tMultiSet.get(c))
-      formed++;
-
-    while(l <= r && formed === swMinlen) {
+    //log(`${l} <= ${r} && ${sw.containsTargetMultiSet}`);
+    while(l <= r && sw.containsTargetMultiSet) {
       const k = s.charAt(l);
       // save smallest window until now
       if(isNaN(minSW.length) || r - l + 1 < minSW.length) {
@@ -29,11 +25,7 @@ const minWindow = (s, t, noAnswer = '') => {
         minSW.R = r;
       }
 
-      sw.set(k, sw.get(k) - 1);
-      if(tMultiSet.has(k) &&
-         sw.get(k) < tMultiSet.get(k))
-        formed--;
-
+      sw.delete(k);
       l++;
     }
     r++;
@@ -54,6 +46,13 @@ class MultiSet extends Map {
   put(e) {
     this.set(e, (this.get(e) || 0) + 1);
   }
+
+  delete(e) {
+    let count = this.get(e);
+    if(count !== undefined)
+      this.set(e, --count);
+    return count;
+  }
 }
 
 class SlidingWindow {
@@ -68,14 +67,33 @@ class SlidingWindow {
 };
 
 class MultiSetSlidingWindow extends MultiSet {
-  constructor() {
+  constructor(targetMultiSet) {
     super();
+    this.targetMultiSet = targetMultiSet;
     this.sw = new SlidingWindow();
+    this.formed = 0;
   }
 
   put(e) {
     super.put(e);
     this.R++;
+    if(this.targetMultiSet.has(e) &&
+       this.get(e) === this.targetMultiSet.get(e)) {
+      this.formed++;
+    }
+  }
+
+  delete(e) {
+    super.delete(e);
+    this.L++;
+    if(this.targetMultiSet.has(e) &&
+       this.get(e) < this.targetMultiSet.get(e))
+      this.formed--;
+  }
+
+  get containsTargetMultiSet() {
+    return this.targetMultiSet.size ===
+           this.formed;
   }
 }
 
