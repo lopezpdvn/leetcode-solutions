@@ -40,7 +40,7 @@ const minWindow = (s, t, noAnswer = '') => {
     r++;
   }
 
-  return minSW.length === -1 ?
+  return isNaN(minSW.length) ?
          noAnswer      :
          s.slice(minSW.L, minSW.R + 1);
 };
