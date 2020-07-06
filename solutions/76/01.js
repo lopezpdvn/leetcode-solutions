@@ -10,28 +10,25 @@ const minWindow = (s, t, noAnswer = '') => {
 
   const tMultiSet  = new MultiSet(t),
         sw = new MultiSetSlidingWindow(tMultiSet),
-        minSW        = new SlidingWindow();
-  let l = 0, r = 0, formed = 0;
+        minSW = new SlidingWindow();
 
   for(const c of s) {
-    sw.put(c);
+    sw.add(c);
 
     while(sw.length >= 0 && sw.containsTargetMultiSet) {
-      const k = s.charAt(l);
+      const k = s.charAt(sw.L);
 
       // save smallest window until now
-      if(isNaN(minSW.length) || r - l + 1 < minSW.length) {
+      if(!minSW.length || sw.length < minSW.length) {
         minSW.L = sw.L;
         minSW.R = sw.R;
       }
 
       sw.delete(k);
-      l++;
     }
-    r++;
   }
 
-  return isNaN(minSW.length) ?
+  return !minSW.length ?
          noAnswer      :
          s.slice(minSW.L, minSW.R + 1);
 };
@@ -43,7 +40,7 @@ class MultiSet extends Map {
       this.set(e, (this.get(e) || 0) + 1);
   }
 
-  put(e) {
+  add(e) {
     this.set(e, (this.get(e) || 0) + 1);
   }
 
@@ -57,8 +54,8 @@ class MultiSet extends Map {
 
 class SlidingWindow {
   constructor() {
-    this.L = undefined;
-    this.R = undefined;
+    this.L = 0;
+    this.R = -1;
   }
 
   get length() {
@@ -75,8 +72,8 @@ class MultiSetSlidingWindow extends MultiSet {
     this.formed = 0;
   }
 
-  put(e) {
-    super.put(e);
+  add(e) {
+    super.add(e);
     this.R++;
     if(this.targetMultiSet.has(e) &&
        this.get(e) === this.targetMultiSet.get(e)) {
@@ -106,7 +103,8 @@ const tests = [
   [['ADOBECODEBANC', 'ABC' ], 'BANC'],
   [['ADOBECODEBANC', 'AB'  ], 'BA'  ],
   [['ABAACBAB'     , 'ABC' ], 'ACB' ],
-  [['ABAACBAB'     , 'ABAC'], 'BAAC']
+  [['ABAACBAB'     , 'ABAC'], 'BAAC'],
+  [['AA'     , 'C'], '']
 ];
 
 tests.forEach(test => {
