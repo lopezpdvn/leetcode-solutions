@@ -16,13 +16,13 @@ const minWindow = (s, t, noAnswer = '') => {
   for(const c of s) {
     sw.put(c);
 
-    //log(`${l} <= ${r} && ${sw.containsTargetMultiSet}`);
-    while(l <= r && sw.containsTargetMultiSet) {
+    while(sw.length >= 0 && sw.containsTargetMultiSet) {
       const k = s.charAt(l);
+
       // save smallest window until now
       if(isNaN(minSW.length) || r - l + 1 < minSW.length) {
-        minSW.L = l;
-        minSW.R = r;
+        minSW.L = sw.L;
+        minSW.R = sw.R;
       }
 
       sw.delete(k);
@@ -70,7 +70,8 @@ class MultiSetSlidingWindow extends MultiSet {
   constructor(targetMultiSet) {
     super();
     this.targetMultiSet = targetMultiSet;
-    this.sw = new SlidingWindow();
+    this.L = 0;
+    this.R = -1;
     this.formed = 0;
   }
 
@@ -94,6 +95,10 @@ class MultiSetSlidingWindow extends MultiSet {
   get containsTargetMultiSet() {
     return this.targetMultiSet.size ===
            this.formed;
+  }
+
+  get length() {
+    return this.R - this.L + 1;
   }
 }
 
