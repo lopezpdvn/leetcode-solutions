@@ -15,17 +15,12 @@ const minWindow = (s, t, noAnswer = '') => {
   for(const c of s) {
     sw.add(c);
 
-    while(sw.length >= 0 && sw.containsTargetMultiSet) {
-      const k = s[sw.L];
-
-      // save smallest window until now
+    while(sw.containsTargetMultiSet) {
       if(!minSW.length || sw.length < minSW.length)
         [minSW.L, minSW.R] = [sw.L, sw.R];
-
-      sw.delete(k);
+      sw.delete(s[sw.L]);
     }
   }
-
   return !minSW.length ?
          noAnswer      :
          s.slice(minSW.L, minSW.R + 1);
