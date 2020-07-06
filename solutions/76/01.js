@@ -74,17 +74,15 @@ class MultiSetSlidingWindow extends MultiSet {
   add(e) {
     super.add(e);
     this.R++;
-    if(this.targetMultiSet.has(e) &&
-       this.get(e) === this.targetMultiSet.get(e)) {
+    if(this.get(e) ===
+       this.targetMultiSet.get(e))
       this.formed++;
-    }
   }
 
   delete(e) {
     super.delete(e);
     this.L++;
-    if(this.targetMultiSet.has(e) &&
-       this.get(e) < this.targetMultiSet.get(e))
+    if(this.get(e) < this.targetMultiSet.get(e))
       this.formed--;
   }
 
@@ -99,12 +97,12 @@ class MultiSetSlidingWindow extends MultiSet {
 }
 
 const tests = [
-  [['ADOBECODEBANC', 'ABC' ], 'BANC'],
-  [['ADOBECODEBANC', 'AB'  ], 'BA'  ],
-  [['ABAACBAB'     , 'ABC' ], 'ACB' ],
-  [['ABAACBAB'     , 'ABAC'], 'BAAC'],
-  [['AA'     , 'C'], ''],
-  [['ACCABCCCCA'   , 'ABA'],  'ACCAB'],
+  [['ADOBECODEBANC', 'ABC' ], 'BANC' ],
+  [['ADOBECODEBANC', 'AB'  ], 'BA'   ],
+  [['ABAACBAB'     , 'ABC' ], 'ACB'  ],
+  [['ABAACBAB'     , 'ABAC'], 'BAAC' ],
+  [['AA'           , 'C'   ], ''     ],
+  [['ACCABCCCCA'   , 'ABA' ], 'ACCAB']
 ];
 
 tests.forEach(test => {
