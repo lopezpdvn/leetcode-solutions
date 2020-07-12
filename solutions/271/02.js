@@ -1,11 +1,12 @@
 'use strict'; const log = console.log; (async ()=>{
 
-/**
- * Encodes a list of strings to a single string.
- *
- * @param {string[]} strs
- * @return {string}
- */
+/* Encode str to [str] & decode back to str with 2
+pure functions that implement encoding & decoding
+algorithms. Charset is Latin-1.
+
+encode ::  String  -> [String]
+decode :: [String] ->  String                   */
+
 const encode = strs => {
   const sb = new Array() // string builder like
   for(const str of strs) {
@@ -16,12 +17,6 @@ const encode = strs => {
   return sb.join('');
 };
 
-/**
- * Decodes a single string to a list of strings.
- *
- * @param {string} s
- * @return {string[]}
- */
 const decode = (s, nBytes = 4) => {
   let i = 0;
   const n = s.length, strs = new Array();
@@ -55,11 +50,6 @@ const strToUInt32 = s => {
   }
   return uIntNum;
 };
-
-/**
- * Your functions will be called as such:
- * decode(encode(strs));
- */
 
 const tests = [
   ['Hello', 'World']
