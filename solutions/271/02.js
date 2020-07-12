@@ -28,9 +28,9 @@ const decode = (s, nBytes = 4) => {
 
   while(i < n) {
     const currStrLen =
-      strToUInt32(s.substr(i, nBytes));
+      strToUInt32(s.substring(i, i + nBytes));
     i += nBytes;
-    strs.push(s.substr(i, currStrLen));
+    strs.push(s.substring(i, i + currStrLen));
     i += currStrLen;
   }
 
