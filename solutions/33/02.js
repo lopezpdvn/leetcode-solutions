@@ -1,11 +1,7 @@
 'use strict'; const log = console.log; (async ()=>{
 
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number}
- */
-var search = function(nums, target) {
+/* f :: [Double] -> Double -> Int */
+const search = (nums, target) => {
     
 };
 
