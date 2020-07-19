@@ -1,5 +1,14 @@
 'use strict'; const log = console.log; (async ()=>{
 
+/* Get [[a]] of BFT of BT left to right, where a
+   is typeof BTNode.val. Example:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7      ->   [[3], [9,20], [15,7]]       */
+
 const levelOrder = root => {
   const levels = [];
   if(!root) return levels;
@@ -25,5 +34,11 @@ const levelOrder = root => {
 
   return levels;
 };
+
+// Time complexity : O(n)
+// Space complexity: O(n)
+
+// breadth first traversal, binary tree,
+// level traversal
 
 })();
