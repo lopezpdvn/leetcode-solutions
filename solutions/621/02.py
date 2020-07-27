@@ -10,15 +10,14 @@ class Solution:
       counter[ord(task) - CHARSET_ZERO_OFFSET] += 1
 
     max_heap = PriorityQueue()
-    i = 0
+    max_heap_index = 0
     for multiplicity in counter:
       if not multiplicity:
         continue
-      max_heap.put((-multiplicity, i))
-      i += 1
+      max_heap.put((-multiplicity, max_heap_index))
+      max_heap_index += 1
 
     time = 0
-
     while not max_heap.empty():
       j = 0
       tmp = []
@@ -35,12 +34,14 @@ class Solution:
           break
         j += 1
 
+      # Restore max heap
       for e_tmp in tmp:
-        max_heap.put((-e_tmp, i))
-        i += 1
+        max_heap.put((-e_tmp, max_heap_index))
+        max_heap_index += 1
 
     return time
 
 
 f = Solution()
 print(f.leastInterval(['A','A','A','B','B','B'], 2))
+print(f.leastInterval(['A','B'], 2))
