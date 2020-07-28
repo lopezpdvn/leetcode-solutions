@@ -1,47 +1,38 @@
 from queue import PriorityQueue
+from collections import Counter
 
 class Solution:
   def leastInterval(self, tasks, n):
-    CHARSET_CARDINALITY = 26
-    CHARSET_ZERO_OFFSET = ord('A')
-
-    counter = [int()] * CHARSET_CARDINALITY
-    for task in tasks:
-      counter[ord(task) - CHARSET_ZERO_OFFSET] += 1
-
+    mSet = Counter(tasks)
     max_heap = PriorityQueue()
     max_heap_index = 0
-    for multiplicity in counter:
-      if not multiplicity:
-        continue
+
+    for multiplicity in mSet.values():
       max_heap.put((-multiplicity, max_heap_index))
       max_heap_index += 1
 
     time = 0
     while not max_heap.empty():
-      j = 0
-      tmp = []
-
-      while j <= n:
+      cooling_period = 0
+      tsks_pend = []
+      while cooling_period <= n:
         if not max_heap.empty():
-          if -max_heap.queue[0][0] > 1:
-            tmp.append(-max_heap.get()[0] - 1)
-          else:
-            max_heap.get()
+          multiplicity = -max_heap.get()[0] - 1
+          if multiplicity:
+            tsks_pend.append(multiplicity)
 
+        cooling_period += 1
         time += 1
-        if max_heap.empty() and not len(tmp):
-          break
-        j += 1
 
-      # Restore max heap
-      for e_tmp in tmp:
-        max_heap.put((-e_tmp, max_heap_index))
+        if max_heap.empty() and not len(tsks_pend):
+          break
+
+      for tsk_remain in tsks_pend:
+        max_heap.put((-tsk_remain, max_heap_index))
         max_heap_index += 1
 
     return time
 
-
-f = Solution()
-print(f.leastInterval(['A','A','A','B','B','B'], 2))
-print(f.leastInterval(['A','B'], 2))
+# print(f('AAABBB', 2))
+# print(f('AAABBB', 0))
+# print(f('AAAAAABCDEFG', 2))
