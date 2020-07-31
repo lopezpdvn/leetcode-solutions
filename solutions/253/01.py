@@ -3,9 +3,7 @@ import heapq
 class Solution:
   def minMeetingRooms(self, intervals):
 
-    # If there is no meeting to schedule then no room needs to be allocated.
-    if not intervals:
-      return 0
+    if not intervals: return 0
 
     # The heap initialization
     free_rooms = []
@@ -31,7 +29,8 @@ class Solution:
     return len(free_rooms)
 
 f = Solution().minMeetingRooms
-
-assert f([[0, 30],[5, 10],[15, 20]]) == 2
-assert f([[7,10],[2,4]]) == 1
+assert f([(0, 30),(5, 10),(15, 20)]) == 2
+assert f([(7,10),(2,4)]) == 1
+assert f([(1, 10), (2, 7), (3, 19), (8, 12),
+          (10, 20), (11, 30)]) == 4
 print('OK!')
