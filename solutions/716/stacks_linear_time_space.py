@@ -4,7 +4,7 @@ class MaxStack(list):
         self.append((x, m))
 
     def pop(self):
-        return list.pop(self)[0]
+        return super().pop()[0]
 
     def top(self):
         return self[-1][0]
