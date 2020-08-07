@@ -30,3 +30,15 @@ const f = A => {
 
   return ans;
 };
+
+const testSetup = [
+  [[1, 2, 2, 3, 1], 2],
+  [[1,2,2,3,1,4,2], 6]
+], log = console.log;
+
+for(const [args, ans] of testSetup) {
+  if(f(args) !== ans)
+    throw new Error(args);
+}
+
+log('OK!');
