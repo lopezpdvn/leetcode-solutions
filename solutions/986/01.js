@@ -1,8 +1,8 @@
 'use strict'; const log = console.log; (async ()=>{
 
-const intervalIntersection = (A, B) => {
+const f = (A, B) => {
   const ans = [];
-  let a = b = 0;
+  let a = 0, b = 0;
 
   while(a < A.length && b < B.length) {
     const intrsctnL = Math.max(A[a][0], B[b][0]);
@@ -17,5 +17,19 @@ const intervalIntersection = (A, B) => {
 
   return ans;
 };
+
+const testSetup = [
+  [[[[0,2],[5,10],[13,23],[24,25]],
+    [[1,5],[8,12],[15,24],[25,26]]],
+    [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]]
+
+], log = console.log,
+  ok = require('assert').deepStrictEqual;
+
+for(const [args, ans] of testSetup) {
+  ok(f(...args), ans);
+}
+
+log('OK!');
 
 })();
