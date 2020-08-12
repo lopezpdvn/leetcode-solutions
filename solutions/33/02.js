@@ -24,4 +24,9 @@ const search = (nums, target) => {
   return -1;
 };
 
+const eq = require('assert').strictEqual;
+eq(f([], 5), -1);
+eq(f([-1, 0, 1, 2, 5, 7, -5, -3], -5), 6);
+eq(f([-1, 0, 1, 2, 5, 7, -5, -3], -2), -1);
+
 })();
