@@ -3,7 +3,7 @@ from itertools import product
 
 def f(A, B, k):
   if A is None or B is None or k < 0:
-    raise Error()
+    raise Exception()
 
   asc_prioq = PriorityQueue()
   for a, b in product(A, B):
