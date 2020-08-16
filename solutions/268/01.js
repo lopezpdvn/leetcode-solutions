@@ -18,5 +18,13 @@ const missingNumber = nums => {
   }
 };
 
+const log = console.log, f = missingNumber,
+  eq = require('assert').strictEqual;
+
+eq(f([]), 0);
+eq(f([0]), 1);
+eq(f([1]), 0);
+eq(f([3,0,1]), 2);
+eq(f([9,6,4,2,3,5,7,0,1]), 8);
 
 })();
