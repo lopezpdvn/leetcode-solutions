@@ -10,13 +10,13 @@ const f = node => {
 const PODFT = function f(
                    node, LBndry, RBndry, leaves) {
   if(!node) return;
-  switch node.kind {
+  switch(node.kind) {
     case BTNodeKind.LBndry: case BTNodeKind.Root:
-      LBndry.push(node);    break;
+      LBndry.push(node.val);    break;
     case BTNodeKind.RBndry:
-      RBndry.unshift(node); break;
+      RBndry.unshift(node.val); break;
     case BTNodeKind.Leaf:
-      leaves.push(node);    break;
+      leaves.push(node.val);    break;
   }
   node.tagChildren();
   f(node.left , LBndry, RBndry, leaves);
@@ -68,8 +68,8 @@ class BTNode {
   tagRightChild() {
     if(!this.right) return;
     switch(this.kind) {
-      case BTNodeKind.Root: case BTNodeKind.BBndry:
-        this.right.kind = BTNodeKind.BBndry;
+      case BTNodeKind.Root: case BTNodeKind.RBndry:
+        this.right.kind = BTNodeKind.RBndry;
         break;
       case BTNodeKind.LBndry:
         if(!this.left) {
@@ -85,10 +85,26 @@ class BTNode {
   }
 }
 
-const root = new BTNode(2,
-  new BTNode(1), new BTNode(3));
+let root = new BTNode(1,
+  null,
+  new BTNode(2,
+    new BTNode(3),
+    new BTNode(4)));
 
-for(const i of root)
-  log(i.val);
+log(f(root));
+
+root = new BTNode(1,
+  new BTNode(2,
+    new BTNode(4),
+    new BTNode(5,
+      new BTNode(7),
+      new BTNode(8))),
+  new BTNode(3,
+    new BTNode(6,
+      new BTNode(9),
+      new BTNode(10)),
+    null));
+
+log(f(root));
 
 })();
