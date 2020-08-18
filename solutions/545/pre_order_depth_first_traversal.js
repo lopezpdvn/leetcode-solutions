@@ -10,11 +10,17 @@ const f = node => {
 const PODFT = function f(
                    node, LBndry, RBndry, leaves) {
   if(!node) return;
-  node.tagChildren();
   switch node.kind {
+    case BTNodeKind.LBndry: case BTNodeKind.Root:
+      LBndry.push(node);    break;
     case BTNodeKind.RBndry:
-      break;
+      RBndry.unshift(node); break;
+    case BTNodeKind.Leaf:
+      leaves.push(node);    break;
   }
+  node.tagChildren();
+  f(node.left , LBndry, RBndry, leaves);
+  f(node.right, LBndry, RBndry, leaves);
 };
 
 const BTNodeKind = {
@@ -54,6 +60,25 @@ class BTNode {
       default:
         this.left.kind =
           !this.left.left && !this.left.right
+            ? BTNodeKind.Leaf
+            : BTNodeKind.Other;
+    }
+  }
+
+  tagRightChild() {
+    if(!this.right) return;
+    switch(this.kind) {
+      case BTNodeKind.Root: case BTNodeKind.BBndry:
+        this.right.kind = BTNodeKind.BBndry;
+        break;
+      case BTNodeKind.LBndry:
+        if(!this.left) {
+          this.right.kind = BTNodeKind.LBndry;
+          break;
+        }
+      default:
+        this.right.kind =
+          !this.right.left && !this.right.right
             ? BTNodeKind.Leaf
             : BTNodeKind.Other;
     }
