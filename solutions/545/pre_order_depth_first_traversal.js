@@ -74,6 +74,7 @@ let root = new BTNode(1,
     new BTNode(4)));
 
 log(f(root));
+// [ 1, 3, 4, 2 ]
 
 root = new BTNode(1,
   new BTNode(2,
@@ -88,5 +89,6 @@ root = new BTNode(1,
     null));
 
 log(f(root));
+// [1, 2, 4, 7, 8, 9, 10, 6, 3]
 
 })();
