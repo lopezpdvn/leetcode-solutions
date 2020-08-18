@@ -1,14 +1,14 @@
 'use strict'; const log = console.log; (async ()=>{
 
 const f = node => {
-  const LBndry = [], RBndry = [], leaves = [];
-  PODFT(node, LBndry, RBndry, leaves,
+  const LBndry = [], RBndry = [], leavs = [];
+  PODFT(node, LBndry, RBndry, leavs,
     BTNodeKind.Root);
-  return LBndry.concat(leaves, RBndry);
+  return LBndry.concat(leavs, RBndry);
 };
 
 const PODFT = function f(
-         node, LBndry, RBndry, leaves, nodeKind) {
+         node, LBndry, RBndry, leavs, nodeKind) {
   if(!node) return;
   switch(nodeKind) {
     case BTNodeKind.LBndry: case BTNodeKind.Root:
@@ -16,12 +16,12 @@ const PODFT = function f(
     case BTNodeKind.RBndry:
       RBndry.unshift(node.val); break;
     case BTNodeKind.Leaf:
-      leaves.push(node.val);    break;
+      leavs.push(node.val);     break;
   }
   const LChildKind = _LChildKind(node, nodeKind),
-    RChildKind = _RChildKind(node, nodeKind);
-  f(node.left, LBndry, RBndry, leaves, LChildKind);
-  f(node.right,LBndry, RBndry, leaves, RChildKind);
+        RChildKind = _RChildKind(node, nodeKind);
+  f(node.left, LBndry, RBndry, leavs, LChildKind);
+  f(node.right,LBndry, RBndry, leavs, RChildKind);
 };
 
 const BTNodeKind = {
@@ -59,32 +59,11 @@ const _RChildKind = (node, nodeKind) => {
   }
 }
 
-// Binary Tree
-
 class BTNode {
   constructor(val, left = null, right = null) {
     this.val = val;
     this.left = left;
     this.right = right;
-  }
-
-  tagRightChild() {
-    if(!this.right) return;
-    switch(this.kind) {
-      case BTNodeKind.Root: case BTNodeKind.RBndry:
-        this.right.kind = BTNodeKind.RBndry;
-        break;
-      case BTNodeKind.LBndry:
-        if(!this.left) {
-          this.right.kind = BTNodeKind.LBndry;
-          break;
-        }
-      default:
-        this.right.kind =
-          !this.right.left && !this.right.right
-            ? BTNodeKind.Leaf
-            : BTNodeKind.Other;
-    }
   }
 }
 
