@@ -2,15 +2,15 @@
 
 const f = node => {
   const LBndry = [], RBndry = [], leaves = [];
-  node.kind = BTNodeKind.Root;
-  PODFT(node, LBndry, RBndry, leaves);
+  PODFT(node, LBndry, RBndry, leaves,
+    BTNodeKind.Root);
   return LBndry.concat(leaves, RBndry);
 };
 
 const PODFT = function f(
-                   node, LBndry, RBndry, leaves) {
+         node, LBndry, RBndry, leaves, nodeKind) {
   if(!node) return;
-  switch(node.kind) {
+  switch(nodeKind) {
     case BTNodeKind.LBndry: case BTNodeKind.Root:
       LBndry.push(node.val);    break;
     case BTNodeKind.RBndry:
@@ -18,14 +18,46 @@ const PODFT = function f(
     case BTNodeKind.Leaf:
       leaves.push(node.val);    break;
   }
-  node.tagChildren();
-  f(node.left , LBndry, RBndry, leaves);
-  f(node.right, LBndry, RBndry, leaves);
+  const LChildKind = _LChildKind(node, nodeKind),
+    RChildKind = _RChildKind(node, nodeKind);
+  f(node.left, LBndry, RBndry, leaves, LChildKind);
+  f(node.right,LBndry, RBndry, leaves, RChildKind);
 };
 
 const BTNodeKind = {
   Root: 0, LBndry: 1, RBndry: 2, Leaf: 3, Other: 4
 };
+
+const _LChildKind = (node, nodeKind) => {
+  if(!node.left) return;
+  switch(nodeKind) {
+    case BTNodeKind.Root:
+    case BTNodeKind.LBndry:
+      return BTNodeKind.LBndry;
+    case BTNodeKind.RBndry:
+      if(!node.right)
+        return BTNodeKind.RBndry;
+    default:
+      return !node.left.left && !node.left.right
+               ? BTNodeKind.Leaf
+               : BTNodeKind.Other;
+  }
+};
+
+const _RChildKind = (node, nodeKind) => {
+  if(!node.right) return;
+  switch(nodeKind) {
+    case BTNodeKind.Root: case BTNodeKind.RBndry:
+      return BTNodeKind.RBndry;
+    case BTNodeKind.LBndry:
+      if(!node.left)
+        return BTNodeKind.LBndry;
+    default:
+      return !node.right.left && !node.right.right
+               ? BTNodeKind.Leaf
+               : BTNodeKind.Other;
+  }
+}
 
 // Binary Tree
 
@@ -34,35 +66,6 @@ class BTNode {
     this.val = val;
     this.left = left;
     this.right = right;
-  }
-
-  *[Symbol.iterator]() {
-    if(this.left)  yield this.left;
-    if(this.right) yield this.right;
-  }
-
-  tagChildren()  {
-    this.tagLeftChild(); this.tagRightChild();
-  }
-
-  tagLeftChild() {
-    if(!this.left) return;
-    switch(this.kind) {
-      case BTNodeKind.Root:
-      case BTNodeKind.LBndry:
-        this.left.kind = BTNodeKind.LBndry;
-        break;
-      case BTNodeKind.RBndry:
-        if(!this.right) {
-          this.left.kind = BTNodeKind.RBndry;
-          break;
-        }
-      default:
-        this.left.kind =
-          !this.left.left && !this.left.right
-            ? BTNodeKind.Leaf
-            : BTNodeKind.Other;
-    }
   }
 
   tagRightChild() {
