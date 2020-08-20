@@ -48,7 +48,7 @@ class SlidingWindowSortedSet extends Map {
   }
 
   get isSortedSetLen() {
-    return this.count <= this.size;
+    return this.count === this.size;
   }
 }
 
