@@ -24,4 +24,20 @@ const zigzagLevelOrder = root => {
   return ans;
 };
 
+class BTNode {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+const eq = require('assert').deepStrictEqual;
+const node = new BTNode(3,
+  new BTNode(9),
+  new BTNode(20,
+    new BTNode(15),
+    new BTNode(7)));
+eq(f(node), [[3],[20,9],[15,7]]);
+
 })();
