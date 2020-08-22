@@ -13,13 +13,11 @@ const f = s => {
       answer += b;
 
     const digit2 = parseInt(s.substring(i - 2, i));
-    if(10 <= digit2 && digit2 <= 26) {
+    if(10 <= digit2 && digit2 <= 26)
       answer += a;
-    }
 
-    const tmp = b;
+    a = b;
     b = answer;
-    a = tmp;
   }
 
   return answer;
@@ -29,6 +27,7 @@ const testSetup = [
   ['', 1],
   ['12', 2],
   ['226', 3],
+  ['111', 3],
   ['2', 1]
 ], log = console.log;
 
