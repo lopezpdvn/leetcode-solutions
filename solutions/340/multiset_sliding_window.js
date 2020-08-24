@@ -31,10 +31,13 @@ class SlidingWindowMultiSet extends Map {
   }
 
   delete(e) {
-    this.L++;
     let count = this.get(e) || 0;
-    if(count)
+    if(count) {
+      this.L++;
       this.set(e, --count);
+      if(!count)
+        super.delete(e);
+    }
     return count;
   }
 
@@ -46,7 +49,9 @@ class SlidingWindowMultiSet extends Map {
 const testSetup = [
   [['eceba', 2], 3],
   [['aa', 1], 2],
-  [['loveleetcode', 4], 7]
+  [['loveleetcode', 4], 7],
+  [['', 5], 0],
+  [['eceba', 0], 0]
 ];
 
 for(const [args, answer] of testSetup) {
