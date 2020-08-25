@@ -80,10 +80,13 @@ class MultiSetSlidingWindow extends MultiSet {
   }
 
   delete(e) {
-    super.delete(e);
+    if(!this.has(e))
+      return 0;
+    const count = super.delete(e);
     this.L++;
-    if(this.get(e) < this.targetMultiSet.get(e))
+    if(count === this.targetMultiSet.get(e) - 1)
       this.formed--;
+    return count;
   }
 
   get containsTargetMultiSet() {
