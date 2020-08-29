@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 public class FileSystem {
     class File {
         boolean isfile = false;
@@ -58,13 +63,15 @@ public class FileSystem {
         }
         return t.files.get(d[d.length - 1]).content;
     }
+
+    public static void main(String[] args) {
+      FileSystem obj = new FileSystem();
+      String path = "/";
+      List<String> param_1 = obj.ls(path);
+      obj.mkdir(path);
+      String filePath = "/hello.txt", content = "hello content";
+      obj.addContentToFile(filePath, content);
+      String param_4 = obj.readContentFromFile(filePath);
+    }
 }
 
-/**
- * Your FileSystem object will be instantiated and called as such:
- * FileSystem obj = new FileSystem();
- * List<String> param_1 = obj.ls(path);
- * obj.mkdir(path);
- * obj.addContentToFile(filePath,content);
- * String param_4 = obj.readContentFromFile(filePath);
- */
