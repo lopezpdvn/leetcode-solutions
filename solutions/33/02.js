@@ -1,21 +1,21 @@
 'use strict'; const log = console.log; (async ()=>{
 
 /* f :: [Double] -> Double -> Int */
-const f = (nums, target) => {
-  let l = 0, h = nums.length - 1;
+const f = (A, target) => {
+  let l = 0, h = A.length - 1;
 
   while(l <= h) {
     const m = l + Math.trunc((h - l) / 2);
-    if(nums[m] === target)
+    if(A[m] === target)
       return m;
 
-    if(nums[l] <= nums[m])
-      if(nums[l] <= target && target < nums[m])
+    if(A[l] <= A[m])
+      if(A[l] <= target && target < A[m])
         h = m - 1;
       else
         l = m + 1;
     else
-      if(nums[m] < target && target <= nums[h])
+      if(A[m] < target && target <= A[h])
         l = m + 1;
       else
         h = m - 1;
