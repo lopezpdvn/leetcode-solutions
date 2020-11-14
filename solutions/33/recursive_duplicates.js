@@ -19,16 +19,13 @@ const f = function p(A, l, h, x) {
       return p(A, m + 1, h, x);
     else
       return p(A, l, m - 1, x);
-  else if(A[l] === A[m])
-    if(A[m] !== A[h])
-      return p(A, m + 1, h, x);
-    else {
+  else {
       const y = p(A, l, m - 1, x);
       if(y === -1)
         return p(A, m + 1, h, x);
       else
         return y;
-    }
+  }
 
   return -1;
 };
@@ -44,6 +41,8 @@ eq(g([2, 2, 2, 3, 4, 2], 4), 4);
 
 eq(g([3, 4, 2, 2, 2, 2], -5), -1);
 eq(g([3, 4, 2, 2, 2, 2], 2), 2);
+eq(g([3, 4, 2, 2, 2, 2], 4), 1);
+eq(g([3, 4, 2, 2, 2, 2], 3), 0);
 eq(g([3, 4, 1, 2, 2, 2], 3), 0);
 eq(g([2, 4, 2, 2, 2, 2], 4), 1);
 
