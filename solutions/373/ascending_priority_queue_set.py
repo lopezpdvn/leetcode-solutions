@@ -2,8 +2,11 @@ from queue import PriorityQueue
 from itertools import product
 
 def f(A, B, k):
-  if A is None or B is None or k < 0:
+  if k < 0:
     raise Exception()
+
+  if not A or not B or not k:
+    return ()
 
   asc_prioq = PriorityQueue()
   asc_prioq.put((A[0] + B[0], 0, 0))
@@ -22,6 +25,7 @@ def f(A, B, k):
           asc_prioq.put((A[a] + B[b+1], a, b+1))
           indices.add((a, b+1))
 
+assert (*f([], [], 3),) == ()
 assert (*f([1,7,11], [2,4,6], 3),) == (
                               (1,2), (1,4), (1,6))
 assert (*f([1,1,2], [1,2,3], 2),) == (
