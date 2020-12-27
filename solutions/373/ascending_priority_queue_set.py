@@ -6,7 +6,7 @@ def f(A, B, k):
     raise Exception()
 
   if not A or not B or not k:
-    return ()
+    return
 
   asc_prioq = PriorityQueue()
   asc_prioq.put((A[0] + B[0], 0, 0))
