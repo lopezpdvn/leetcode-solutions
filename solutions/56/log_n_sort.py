@@ -1,4 +1,4 @@
-def merge(self, intervals):
+def merge(intervals):
   intervals.sort()
   merged = []
 
@@ -16,3 +16,8 @@ def merge(self, intervals):
                           interval[1])
 
   return merged
+
+f = merge
+assert f([[1,3],[2,6],[8,10],[15,18]]) == [
+                             [1,6],[8,10],[15,18]]
+assert f([[1,4],[4,5]]) == [[1,5]]
