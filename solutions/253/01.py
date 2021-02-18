@@ -5,7 +5,7 @@ class Solution:
   def minMeetingRooms(self, intervals):
     if not intervals: return 0
 
-    intervals.sort(key=lambda x: x[0]) # by start
+    intervals.sort()
     desc_prioq = PriorityQueue()
     prioq_index = 0
 
