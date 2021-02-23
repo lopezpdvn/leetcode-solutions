@@ -1,27 +1,29 @@
 def f(s):
     if s is None: raise Exception()
+    if not s: return 1
+
     n = len(s)
-    if not n: return 1
-    if n == 1 and s[0] != '0': return 1
-    x = int(s[:2])
-    if n == 2 and 10 <= x <= 26: return 2
+    if n == 1 and s != '0': return 1
 
-    minus1c = 2
-    minus2c = 1
-    for i in range(2, n):
-        pathSum = 0
-        if s[i] != '0': pathSum += minus1c
+    a = 1
+    b = 0 if s == '0' else 1
 
-        x = int(s[i-1:i+1])
-        if 10 <= x <= 26: pathSum += minus2c
+    c = 0
+    for i in range(2, n+1):
+        c = 0
 
-        minus1 = pathSum
-        minus2 = minus1
+        if s[i-1] != '0':   c += a
 
-    return pathSum
+        num = int(s[i-2:i])
+        if 10 <= num <= 26: c += b
+
+        a, b = b, c
+
+    return c
 
 assert f('') == 1
 assert f('12') == 2
+assert f('09') == 1
 assert f('226') == 3
 assert f('2') == 1
 assert f('111') == 3
