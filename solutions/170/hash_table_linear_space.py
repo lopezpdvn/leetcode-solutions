@@ -13,6 +13,9 @@ class TwoSum(object):
       return (    self.num_counts[comple]
                >= min_multiplicity)
 
+# Time: O(n)
+# Space: O(n)
+
 x = TwoSum()
 x.add(1)
 x.add(3)
