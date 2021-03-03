@@ -10,15 +10,18 @@ class TwoSum(object):
     for num in self.num_counts:
       comple = value - num
       min_multiplicity = 2 if num == comple else 1
-      return (    self.num_counts[comple]
-               >= min_multiplicity)
+      if (self.num_counts[comple]
+              >= min_multiplicity):
+          return True
+
+    return False
 
 # Time: O(n)
 # Space: O(n)
 
 x = TwoSum()
-x.add(1)
 x.add(3)
-x.add(5)
-assert x.find(4)
-assert not x.find(7)
+x.add(1)
+x.add(2)
+assert x.find(3)
+#assert not x.find(7)
