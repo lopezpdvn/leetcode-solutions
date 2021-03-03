@@ -1,28 +1,17 @@
 class TwoSum(object):
   def __init__(self):
-    self.num_counts = {}
+    from collections import Counter
+    self.num_counts = Counter()
 
   def add(self, number):
-    if number in self.num_counts:
-      self.num_counts[number] += 1
-    else:
-      self.num_counts[number] = 1
+    self.num_counts[number] += 1
 
   def find(self, value):
-    """
-    Find if there exists any pair of numbers which sum is equal to the value.
-    :type value: int
-    :rtype: bool
-    """
-    for num in self.num_counts.keys():
+    for num in self.num_counts:
       comple = value - num
-      if num != comple:
-        if comple in self.num_counts:
-          return True
-      elif self.num_counts[num] > 1:
-        return True
-    
-    return False
+      min_multiplicity = 2 if num == comple else 1
+      return (    self.num_counts[comple]
+               >= min_multiplicity)
 
 x = TwoSum()
 x.add(1)
