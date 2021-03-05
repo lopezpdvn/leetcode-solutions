@@ -27,4 +27,5 @@ assert f('12') == 2
 assert f('09') == 0
 assert f('226') == 3
 assert f('2') == 1
+assert f('0') == 0
 assert f('111') == 3
