@@ -4,6 +4,10 @@ def prints(A):
     for a in A:
         print(a)
 
+def printnxt(S, nxt):
+    for s, _nxt in zip(S, nxt):
+        print(s, _nxt)
+
 class Solution:
   def minWindow(self, S, T):
     N = len(S)
@@ -12,6 +16,8 @@ class Solution:
     for i in range(N-1, -1, -1):
       last[ord(S[i]) - ord('a')] = i
       nxt[i] = tuple(last)
+
+    printnxt(S, nxt)
   
     # candidate SWs len 1, T[0] 1st char
     sws = [[i, i] for i, c in enumerate(S)
