@@ -1,0 +1,38 @@
+from pprint import pprint
+
+def prints(A):
+    for a in A:
+        print(a)
+
+class Solution:
+  def minWindow(self, S, T):
+    N = len(S)
+    nxt = [None] * N
+    last = [-1] * 26 # cardinality char set
+    for i in range(N-1, -1, -1):
+      last[ord(S[i]) - ord('a')] = i
+      nxt[i] = tuple(last)
+
+    # candidate SWs len 1, T[0] 1st char
+    sws = [[i, i] for i, c in enumerate(S)
+           if c == T[0]]
+
+    for t in T[1:]:
+      t_ix = ord(t) - ord('a')
+
+      for sw in sws: # either shift R or return ''
+        i, j = sw
+        # next occurrence of t in S[i+1:]
+        t_in_S_nxt = nxt[j+1][t_ix]
+        if t_in_S_nxt < 0:
+          return ''
+
+        sw[1] = t_in_S_nxt
+
+    if not sws: return ''
+    i, j = min(sws, key = lambda e: e[1] - e[0])
+    return S[i: j+1]
+
+x = Solution()
+f = x.minWindow
+assert f('abcdebdde', 'bde') == 'bcde'
