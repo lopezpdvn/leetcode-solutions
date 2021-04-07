@@ -12,23 +12,18 @@ class Solution:
     for i in range(N-1, -1, -1):
       last[ord(S[i]) - ord('a')] = i
       nxt[i] = tuple(last)
-
+  
     # candidate SWs len 1, T[0] 1st char
     sws = [[i, i] for i, c in enumerate(S)
            if c == T[0]]
-
+  
     for t in T[1:]:
       t_ix = ord(t) - ord('a')
-
-      for sw in sws: # either shift R or return ''
-        i, j = sw
-        # next occurrence of t in S[i+1:]
-        t_in_S_nxt = nxt[j+1][t_ix]
-        if t_in_S_nxt < 0:
-          return ''
-
-        sw[1] = t_in_S_nxt
-
+  
+      sws = [[root, nxt[i+1][t_ix]]
+             for root, i in sws
+             if 0 <= i < N-1 and nxt[i+1][t_ix] >=0]
+  
     if not sws: return ''
     i, j = min(sws, key = lambda e: e[1] - e[0])
     return S[i: j+1]
