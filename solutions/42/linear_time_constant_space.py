@@ -1,4 +1,5 @@
 def f(height):
+  if not height: return 0
   n = len(height)
 
   # index of last max element
