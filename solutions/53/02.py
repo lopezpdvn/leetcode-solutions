@@ -1,6 +1,9 @@
 import math
 
 def f(A):
+    if not A:
+        return 0
+
     curr_suba_sum = -math.inf
     max_sum = -math.inf
 
@@ -10,6 +13,7 @@ def f(A):
 
     return max_sum
 
+assert f([]) == 0
 assert f([2]) == 2
 assert f([-2, 1, -3, 4, -1, 2, 1, -5, 4]) == 6
 assert f([-5, -5, 2]) == 2
