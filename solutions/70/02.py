@@ -1,5 +1,5 @@
 def f(n):
-    A = [int()] * (n + 1)
+    A = [0 for i in range(n + 1)]
     return g(n, A)
 
 
