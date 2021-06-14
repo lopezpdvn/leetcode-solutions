@@ -11,7 +11,7 @@ class SlidingWindow:
 def f(A):
     mset = Counter()
     sws = {}
-    A_deg = -inf
+    A_deg = 1 # nonempty arr by definition
 
     for i, e in enumerate(A):
         if sws.get(e) is None:
@@ -20,7 +20,7 @@ def f(A):
         mset[e] += 1
         A_deg = max(A_deg, mset[e])
 
-    shortst_len = inf
+    shortst_len = len(A)
     for e, sw in sws.items():
         if mset[e] != A_deg:
             continue
