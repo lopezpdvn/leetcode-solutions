@@ -1,5 +1,4 @@
 from collections import Counter
-from math import inf
 
 class SlidingWindow:
     def __init__(self, L = 0, R = -1):
