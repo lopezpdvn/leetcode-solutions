@@ -45,4 +45,5 @@ assert f('eceba', 2) == 3
 assert f('aa', 1) == 2
 assert f('loveleetcode', 4) == 7
 assert f('xxxxxxxxxx', 2) == 10
+assert f('xxxxxxxxxx', 1) == 10
 assert f('xxxxxxxxxx', 0) == 0
