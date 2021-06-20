@@ -1,5 +1,5 @@
 from queue import PriorityQueue
-from collections import Counter
+from collections import Counter, deque
 
 def f(tsks, min_cooloff_t):
   mSet = Counter(tsks)
@@ -11,7 +11,7 @@ def f(tsks, min_cooloff_t):
   time = 0
   while not asc_prioq.empty():
     cooloff_t = min_cooloff_t
-    cooloff_tsks = []
+    cooloff_tsks = deque()
     while cooloff_t >= 0 and (
           not asc_prioq.empty() or cooloff_tsks):
       if not asc_prioq.empty():
