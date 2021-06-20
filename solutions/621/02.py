@@ -1,38 +1,34 @@
 from queue import PriorityQueue
 from collections import Counter
 
-class Solution:
-  def leastInterval(self, tasks, n):
-    mSet = Counter(tasks)
-    max_heap = PriorityQueue()
-    max_heap_index = 0
+def f(tsks, min_cooloff_t):
+  mSet = Counter(tsks)
+  asc_prioq = PriorityQueue()
 
-    for multiplicity in mSet.values():
-      max_heap.put((-multiplicity, max_heap_index))
-      max_heap_index += 1
+  for mltplct in mSet.values():
+    asc_prioq.put(-mltplct)
 
-    time = 0
-    while not max_heap.empty():
-      cooling_period = 0
-      tsks_pend = []
-      while cooling_period <= n:
-        if not max_heap.empty():
-          multiplicity = -max_heap.get()[0] - 1
-          if multiplicity:
-            tsks_pend.append(multiplicity)
+  time = 0
+  while not asc_prioq.empty():
+    cooloff_t = min_cooloff_t
+    cooloff_tsks = []
+    while cooloff_t >= 0 and (
+          not asc_prioq.empty() or cooloff_tsks):
+      if not asc_prioq.empty():
+        mltplct = -asc_prioq.get() - 1
 
-        cooling_period += 1
-        time += 1
+        if mltplct:
+          cooloff_tsks.append(mltplct)
 
-        if max_heap.empty() and not len(tsks_pend):
-          break
+      time += 1
+      cooloff_t -= 1
 
-      for tsk_remain in tsks_pend:
-        max_heap.put((-tsk_remain, max_heap_index))
-        max_heap_index += 1
+    for mltplct in cooloff_tsks:
+      asc_prioq.put(-mltplct)
 
-    return time
+  return time
 
-# print(f('AAABBB', 2))
-# print(f('AAABBB', 0))
-# print(f('AAAAAABCDEFG', 2))
+assert f('AAABBB', 2) == 8
+assert f('AAABBB', 1) == 6
+assert f('AAABBB', 0) == 6
+assert f('AAAAAABCDEFG', 2) == 16
